@@ -18,7 +18,7 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: path.resolve(__dirname, "./public/assets"), to: "asset" },
+        { from: path.resolve(__dirname, "./public/assets"), to: path.resolve(__dirname, "./dist/asset")  },
       ],
     }),
     new MiniCssExtractPlugin({
@@ -29,13 +29,18 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader,{
-          options:{
-            postcssOptions:{
-              plugins:[require("postcss-preset-env"),]
-            }
-          }
-        }, "css-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('postcss-preset-env')],
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.s[ac]ss$/,
