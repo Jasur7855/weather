@@ -1,22 +1,22 @@
 let weather = [
     {
-      bgImg: "../public/assets/summer-bg.jpg",
-      icon: "../public/assets/icons/sun.svg",
-      sound: "../public/assets/sounds/summer.mp3",
-      pauseImg:"../public/assets/icons/pause.svg",
+      bgImg: "../assets/summer-bg.jpg",
+      icon: "../assets/icons/sun.svg",
+      sound: "../assets/sounds/summer.mp3",
+      pauseImg:"../assets/icons/pause.svg",
     },
     {
-      bgImg: "../public/assets/rainy-bg.jpg",
-      icon: "../public/assets/icons/cloud-rain.svg",
-      sound: "../public/assets/sounds/rain.mp3",
-      pauseImg:"../public/assets/icons/pause.svg",
+      bgImg: "../assets/rainy-bg.jpg",
+      icon: "../assets/icons/cloud-rain.svg",
+      sound: "../assets/sounds/rain.mp3",
+      pauseImg:"../assets/icons/pause.svg",
 
     },
     {
-      bgImg: "../public/assets/winter-bg.jpg",
-      icon: "../public/assets/icons/cloud-snow.svg",
-      sound: "../public/assets/sounds/winter.mp3",
-      pauseImg:"../public/assets/icons/pause.svg",
+      bgImg: "../assets/winter-bg.jpg",
+      icon: "../assets/icons/cloud-snow.svg",
+      sound: "../assets/sounds/winter.mp3",
+      pauseImg:"../assets/icons/pause.svg",
     },
     
   ];
