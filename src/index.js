@@ -40,7 +40,9 @@ function renderItem(elem) {
   weatherContainer.appendChild(child);
 }
 
-weatherContainer.addEventListener("click", (event) => {
+weatherContainer.addEventListener("click",clickWeatherButton );
+
+function clickWeatherButton(event)  {
   let target = event.target;
   weatherContainer.querySelectorAll(".weather img").forEach((elem)=>{
     elem.src = data[0].pauseImg
@@ -80,7 +82,8 @@ weatherContainer.addEventListener("click", (event) => {
     const img = target.querySelector("img");
     if (img) img.src = target.getAttribute("data-icon");
   }
-});
+}
+
 // Настройка громкости через слайдер
 musicInput.addEventListener("input", (event) => {
   const volume = event.target.value / 100;
