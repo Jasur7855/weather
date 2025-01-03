@@ -1,11 +1,18 @@
 import "./style.scss";
-import data from "./data.js";
+import data from "./data";
+
+interface WeatherData{
+  bgImg: string,
+      icon: string,
+      sound: string,
+      pauseImg:string,
+}
 
 // Elements
-const heading = document.createElement("h1");
-const weatherContainer = document.createElement("div");
-const musicInput = document.createElement("input");
-const audioElement = new Audio();
+const heading:HTMLHeadElement = document.createElement("h1");
+const weatherContainer:HTMLDivElement = document.createElement("div");
+const musicInput:HTMLInputElement = document.createElement("input");
+const audioElement:HTMLAudioElement = new Audio();
 audioElement.loop = true;
 
 // Add child in body
@@ -19,11 +26,11 @@ heading.textContent = "Weather Sound";
 weatherContainer.classList.add("weatherContainer");
 
 musicInput.type = "range";
-musicInput.min = 0;
-musicInput.max = 100;
-musicInput.value = 100;
+musicInput.min = "0";
+musicInput.max= "100";
+musicInput.value = "100";
 
-function renderItem(elem) {
+function renderItem(elem:WeatherData) {
   const child = document.createElement("div");
   child.classList.add("weather");
   child.setAttribute("data-music-status", "pause");
@@ -42,14 +49,14 @@ function renderItem(elem) {
 
 weatherContainer.addEventListener("click",clickWeatherButton );
 
-function clickWeatherButton(event)  {
-  let target = event.target;
-  weatherContainer.querySelectorAll(".weather img").forEach((elem)=>{
+function clickWeatherButton(event:MouseEvent):void  {
+  let target = event.target as HTMLElement;
+  weatherContainer.querySelectorAll<HTMLImageElement>(".weather img").forEach((elem)=>{
     elem.src = data[0].pauseImg
   })
   // Проверяем, что клик был по элементу с классом weather
   while (target && !target.classList.contains("weather")) {
-    target = target.parentElement;
+    target = target.parentElement as HTMLElement;
   }
   if (!target) return;
 
@@ -86,7 +93,8 @@ function clickWeatherButton(event)  {
 
 // Настройка громкости через слайдер
 musicInput.addEventListener("input", (event) => {
-  const volume = event.target.value / 100;
+  const target = event.target as HTMLInputElement;
+  const volume = Number(target.value) / 100;
   audioElement.volume = volume;
 });
 
