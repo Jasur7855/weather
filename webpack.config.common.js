@@ -18,11 +18,11 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: path.resolve(__dirname, "./public/assets"), to: path.resolve(__dirname, "./dist/asset")  },
+        { from: path.resolve(__dirname, "./public/assets"), to: path.resolve(__dirname, "./dist/public/assets")  },
       ],
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css", // Исправлено расширение на .css
+      filename: "[name].[contenthash].css", 
     }),
   ],
   module: {

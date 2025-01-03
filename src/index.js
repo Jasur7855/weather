@@ -5,7 +5,7 @@ import data from "./data.js";
 const heading = document.createElement("h1");
 const weatherContainer = document.createElement("div");
 const musicInput = document.createElement("input");
-const audioElement = new Audio();  
+const audioElement = new Audio();
 audioElement.loop = true;
 
 // Add child in body
@@ -25,48 +25,61 @@ musicInput.value = 100;
 
 function renderItem(elem) {
   const child = document.createElement("div");
-  child.setAttribute("data-music", "pause");
-  const img = document.createElement("img");
   child.classList.add("weather");
-  child.style.backgroundImage = `url(${elem.bgImg})`;
-  img.src = `${elem.pauseImg}`;
+  child.setAttribute("data-music-status", "pause");
+  child.setAttribute("data-icon", elem.icon);
+  child.setAttribute("data-bgImg", elem.bgImg);
+  child.setAttribute("data-sound", elem.sound);
+
+  const img = document.createElement("img");
+  img.src = elem.pauseImg;
   img.alt = "Weather background";
 
-  child.addEventListener("click", () => {
-    // Сначала сбрасываем состояние всех элементов на pause
-    const allChildren = weatherContainer.querySelectorAll(".weather");
-    allChildren.forEach((childElement) => {
-      childElement.setAttribute("data-music", "pause");
-      childElement.querySelector("img").src = `${elem.pauseImg}`;
-    });
-
-    // Устанавливаем фон и ставим текущий элемент в состояние play
-    document.body.style.backgroundImage = `url(${elem.bgImg})`;
-
-    const musicStatus = child.getAttribute("data-music");
-    if (musicStatus === "pause") {
-      // Прекращаем воспроизведение предыдущей музыки
-      audioElement.pause();
-      audioElement.currentTime = 0; // Сбрасываем воспроизведение
-
-      // Загружаем и воспроизводим новый звук
-      audioElement.src = elem.sound;
-      audioElement.play();
-
-      // Обновляем состояние элемента
-      child.setAttribute("data-music", "play");
-      img.src = elem.icon; 
-    } else {
-      audioElement.pause();
-      child.setAttribute("data-music", "pause");
-      img.src = `${elem.pauseImg}`;
-    }
-  });
-
+  child.style.backgroundImage = `url(${elem.bgImg})`;
   child.appendChild(img);
   weatherContainer.appendChild(child);
 }
+weatherContainer.addEventListener("click", (event) => {
+  let target = event.target;
+  weatherContainer.querySelectorAll(".weather img").forEach((elem)=>{
+    elem.src = data[0].pauseImg
+  })
+  // Проверяем, что клик был по элементу с классом weather
+  while (target && !target.classList.contains("weather")) {
+    target = target.parentElement;
+  }
+  if (!target) return;
 
+  const musicStatus = target.getAttribute("data-music-status");
+
+  if (musicStatus === "play") {
+    audioElement.pause();
+    target.setAttribute("data-music-status", "pause");
+    const img = target.querySelector("img");
+    if (img) img.src = data[0].pauseImg;
+  } else if (musicStatus === "pause") {
+    // Сброс состояния всех элементов
+    const allChildren = weatherContainer.querySelectorAll(".weather");
+    allChildren.forEach((childElement) => {
+      childElement.setAttribute("data-music-status", "pause");
+      const img = childElement.querySelector("img");
+      if (img) img.src = data[0].pauseImg
+    });
+
+    // Устанавливаем новый фон и звук
+    document.body.style.backgroundImage = `url(${target.getAttribute(
+      "data-bgImg"
+    )})`;
+    audioElement.pause();
+    audioElement.currentTime = 0;
+    audioElement.src = target.getAttribute("data-sound");
+    audioElement.play();
+
+    target.setAttribute("data-music-status", "play");
+    const img = target.querySelector("img");
+    if (img) img.src = target.getAttribute("data-icon");
+  }
+});
 // Настройка громкости через слайдер
 musicInput.addEventListener("input", (event) => {
   const volume = event.target.value / 100;
@@ -77,3 +90,5 @@ musicInput.addEventListener("input", (event) => {
 data.forEach((elem) => {
   renderItem(elem);
 });
+
+
