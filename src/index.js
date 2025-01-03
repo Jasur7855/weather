@@ -39,6 +39,7 @@ function renderItem(elem) {
   child.appendChild(img);
   weatherContainer.appendChild(child);
 }
+
 weatherContainer.addEventListener("click", (event) => {
   let target = event.target;
   weatherContainer.querySelectorAll(".weather img").forEach((elem)=>{
